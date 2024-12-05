@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Masonry Grid</title>
+    <style>
+      .masonry-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px; /* отступ между блоками */
+      }
+
+      .masonry-item {
+        background-color: #ccc;
+        padding: 20px;
+        text-align: center;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+        box-sizing: border-box; /* Включаем отступы в общую ширину элемента */
+      }
+
+      .masonry-item.large {
+        flex: 0 0 33.333%; /* Блок занимает 2 колонки */
+      }
+
+      .masonry-item:not(.large) {
+        flex: 0 0 16.666%; /* Маленькие блоки занимают 1 колонку */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="masonry-grid">
+      <div class="masonry-item">1</div>
+      <div class="masonry-item">2</div>
+      <div class="masonry-item large">3</div>
+      <div class="masonry-item">4</div>
+      <div class="masonry-item">5</div>
+      <div class="masonry-item">6</div>
+      <div class="masonry-item">7</div>
+      <div class="masonry-item">8</div>
+      <div class="masonry-item large">9</div>
+      <div class="masonry-item">10</div>
+      <div class="masonry-item">11</div>
+      <div class="masonry-item large">12</div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        var $items = $('.masonry-item');
+        var containerWidth = $('.masonry-grid').width(); // Ширина контейнера
+        var columnCount = 6; // Количество колонок
+        var columnWidth = containerWidth / columnCount; // Ширина одной колонки
+        var gap = 10; // Отступ между элементами
+
+        // Рассчитываем для каждого блока ширину
+        $items.each(function (index) {
+          var $item = $(this);
+          var isLarge = $item.hasClass('large');
+          var itemWidth;
+
+          if (isLarge) {
+            // Большие блоки занимают 2 колонки
+            itemWidth = columnWidth * 2 - gap;
+          } else {
+            // Маленькие блоки занимают 1 колонку
+            itemWidth = columnWidth - gap;
+          }
+
+          // Устанавливаем ширину элемента
+          $item.css('width', itemWidth);
+        });
+      });
+    </script>
+  </body>
+</html>
